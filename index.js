@@ -18,20 +18,6 @@ AvlTree.prototype.search = function (element, node) {
 	}
 };
 
-function getHeight(node) {
-	if (node === null) {
-		return 0;
-	}
-	return node.height;
-};
-
-function getBalance(node) {
-	if (node != null) {
-		return (getHeight(node.right) - getHeight(node.left));
-	}
-	return 0;
-}
-
 AvlTree.prototype.insert = function (element, node) {
 	if (node === null) {
 		return new Node(element);
@@ -188,6 +174,20 @@ function sortLeftToRight(a, b) {
 		return -1
 	} else if (a > b) {
 		return 1;
+	}
+	return 0;
+}
+
+function getHeight(node) {
+	if (node === null) {
+		return 0;
+	}
+	return node.height;
+};
+
+function getBalance(node) {
+	if (node != null) {
+		return (getHeight(node.right) - getHeight(node.left));
 	}
 	return 0;
 }

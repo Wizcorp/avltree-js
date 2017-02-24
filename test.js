@@ -1,5 +1,5 @@
 var assert = require('assert');
-var AvlTree = require('./jAvlTree');
+var AvlTree = require('./index.js');
 
 describe('should insert', function () {
 	var tree;

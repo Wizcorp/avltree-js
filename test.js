@@ -97,4 +97,21 @@ describe('avltree-js tests', function() {
 			assert.strictEqual(targetNode.element, target);
 		});
 	});
+	describe('delete', function () {
+		var tree;
+		beforeEach(function () {
+			tree = new AvlTree();
+		});
+		it('should remove a leaf element from the tree', function () {
+			var root = tree.insert(1, null);
+			root = tree.insert(2, root);
+			tree.delete(2, root, null);
+			assert.strictEqual(root.right, null);
+			assert.strictEqual(root.element, 1);
+			assert.strictEqual(root.height, 1);
+		});
+		it('should delete the root from the tree', function () {
+			
+		});
+	});
 });

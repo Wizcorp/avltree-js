@@ -18,6 +18,7 @@ AvlTree.prototype.search = function (element, node) {
 	}
 };
 
+//TODO: internalize and manage root
 AvlTree.prototype.insert = function (element, node) {
 	if (node === null) {
 		return new Node(element);
@@ -121,7 +122,8 @@ AvlTree.prototype.delete = function (element, node, parent) {
 				parent.left = null;
 			}
 		}
-		this._balance(parent);
+		parent.height = Math.max(getHeight(node.left), getHeight(node.right)) + 1;
+		return this._balance(parent);
 	}
 };
 
@@ -142,7 +144,7 @@ AvlTree.prototype.getMax = function (element, node) {
 };
 
 AvlTree.prototype._balance = function (node) {
-	var balance = node.left.height - node.right.height;
+	var balance = getHeight(node.left) - getHeight(node.right);
 	if (balance < 0) {
 		// TODO: rr
 		// TODO: ll
@@ -154,6 +156,7 @@ AvlTree.prototype._balance = function (node) {
 	} else if (balance > 0) {
 
 	}
+	return node;
 };
 
 AvlTree.prototype.forEach = function (node, func) {

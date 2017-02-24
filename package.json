@@ -6,6 +6,10 @@
   "scripts": {
     "test": "mocha"
   },
-  "author": "",
-  "license": "ISC"
+  "repository" :
+  { "type" : "git"
+  , "url" : "https://github.com/Tatsujinichi/avltree-js.git"
+  },
+  "author": "John Ferreira",
+  "license": "MIT"
 }

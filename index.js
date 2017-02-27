@@ -96,51 +96,47 @@ AvlTree.prototype._delete = function (element, node, parent) {
 		return this._delete(element, node.right, node);
 	} else { // found our target element
 		if (node.left !== null && node.right !== null) {
-
-
-			var current = node.right; // find the next greatest valued node
-			var parentOfNextGreatest = node;
-			var nextGreatest = null;
-			while (current.left) {
-				parentOfNextGreatest = nextGreatest;
-				nextGreatest = current.left;
-			}
-			var nextGreatest = this.getMin(node.right);
-			parentOfNextGreatest.left = node;
-			nextGreatest.left = node.left;
-			nextGreatest.right = node.right;
-			node.left = null;
-			node.right = null;
+			var detachedNode = this._deleteWithTwoChildren(element, node.right, node);
 			if (parent.right === node) { // we are in the right child
-				parent.right = nextGreatest;
+				parent.right = detachedNode;
 			} else { // we are in the left child
-				parent.left = nextGreatest;
+				parent.left = detachedNode;
 			}
-
-
 		} else if (node.left !== null) { // only has left
-			if (parent.right === node) { // we are in the right child
+			if (parent.right === node) {
 				parent.right = node.left;
-			} else { // we are in the left child
+			} else {
 				parent.left = node.left;
 			}
 			node.left = null;
 		} else if (node.right !== null) { // only has right
-			if (parent.right === node) { // we are in the right child
+			if (parent.right === node) {
 				parent.right = node.right;
-			} else { // we are in the left child
+			} else {
 				parent.left = node.right;
 			}
 			node.right = null;
 		} else { // both children are empty
-			if (parent.right === node) { // we are in the right child
+			if (parent.right === node) {
 				parent.right = null;
-			} else { // we are in the left child
+			} else {
 				parent.left = null;
 			}
 		}
-		parent.height = Math.max(getHeight(node.left), getHeight(node.right)) + 1;
-		return this._balance(parent);
+		return this._balance(node, parent); // could be parent, but we need parent's parent
+	}
+};
+
+AvlTree.prototype._deleteWithTwoChildren = function (element, node, parent) {
+	if (node.left === null) {
+		if (parent.right === node) { // we are in the right child
+			parent.right = null;
+		} else { // we are in the left child
+			parent.left = null;
+		}
+		return this._balance(parent); // this is the min value from the right sub tree
+	} else {
+		return this._deleteWithTwoChildren(node.left, node)
 	}
 };
 
@@ -160,73 +156,80 @@ AvlTree.prototype.getMax = function (element, node) {
 	}
 };
 
-AvlTree.prototype._balance = function (node) {
-	var balance = getHeight(node.left) - getHeight(node.right);
-	if (balance < 0) {
-		//TODO: maybe trinode
-
-		// TODO: update height
-	} else if (balance > 0) {
-
+AvlTree.prototype._balance = function (node, parent) {
+	updateHeight(node);
+	var balance = getBalance(node);
+	if (balance < -1) {
+		var z = node;
+		var y = node.left;
+		var x = this._getTallestSubtree(y);
+		var newRoot = this._triNodeRestructure(x, y, z, parent);
+		updateHeight(newRoot);
+		return newRoot;
+	} else if (balance > 1) {
+		var z = node;
+		var y = node.right;
+		var x = this._getTallestSubtree(y);
+		var newRoot = this._triNodeRestructure(x, y, z, parent);
+		updateHeight(newRoot);
+		return newRoot;
 	}
 	return node;
 };
 
-//TODO: refactor out parent
-AvlTree.prototype.triNodeRestructure = function (x, y, z) {
+AvlTree.prototype._getTallestSubtree = function (node) {
+	var balance = getBalance(node);
+	if (balance < 0) {
+		return node.left;
+	} else {
+		return node.right;
+	}
+};
+
+//Input: Unbalanced node z , y is the taller child of z, x is the taller child of y, parent is parent of z
+//Output: position of the node that goes in the place of z when finished
+AvlTree.prototype._triNodeRestructure = function (x, y, z, parent) {
 	var a, b, c;
-	if (z.element <= x.element && x.element <= y.element) {
+	if (z.right === y && y.left === x) {
 		a = z;
 		b = x;
 		c = y;
 	}
-	if (z.element >= x.element && x.element >= y.element) {
-		a = y;
-		b = x;
-		c = z;
-	}
-	if (z.element <= y.element && y.element <= x.element) {
+	if (z.right === y && y.right === x) {
 		a = z;
 		b = y;
 		c = x;
 	}
-	if (z.element >= y.element && y.element >= x.element) {
+	if (z.left === y && y.left === x) {
 		a = x;
 		b = y;
 		c = z;
 	}
-
+	if (z.left === y && y.right === x) {
+		a = y;
+		b = x;
+		c = z;
+	}
 	if (z === this._root) {
 		this._root = b;
 		b.parent = null
 	} else {
-		if (z.parent.left === z) {
-			makeLeftChild(z.parent, b);
+		if (parent.left === z) {
+			parent.left = b;
 		} else {
-			makeRightChild(z.parent, b);
+			parent.right = b;
 		}
 	}
-
 	if (b.left !== x && b.left !== y && b.left !== z) {
-		makeRightChild(a, b.left);
+		a.right = b.left;
 	}
 	if (b.right !== x && b.right !== y && b.right !== z) {
-		makeLeftChild(c, b.right);
+		c.left = b.right;
 	}
-	makeLeftChild(b, a);
-	makeRightChild(b, c);
+	b.left = a;
+	b.right = c;
+	return b;
 };
-
-function makeLeftChild(a, b) {
-	a.leftChild = b;
-	b.parent = a;
-}
-
-function makeRightChild(a, b) {
-	a.rightchild = b;
-	b.parent = a;
-}
-//TODO: refactor out parent
 
 AvlTree.prototype.forEach = function (node, func) {
 	this.forEach(node.left, func);
@@ -255,9 +258,13 @@ function getHeight(node) {
 		return 0;
 	}
 	return node.height;
-};
+}
 
-function getBalance(node) {
+function updateHeight(node) {
+	node.height = Math.max(getHeight(node.left), getHeight(node.right)) + 1;
+}
+
+function getBalance(node) {   // TODO: is something backwards?
 	if (node != null) {
 		return (getHeight(node.right) - getHeight(node.left));
 	}

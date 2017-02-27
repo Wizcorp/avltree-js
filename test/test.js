@@ -111,7 +111,9 @@ describe('avltree-js tests', function() {
 			assert.strictEqual(tree._root.height, 1);
 		});
 		it('should delete the root from the tree', function () {
-
+			tree.insert(1);
+			tree.delete(1);
+			assert.strictEqual(tree._root, null);
 		});
 		it('should remove an element with only left children', function () {
 

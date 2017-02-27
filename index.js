@@ -34,9 +34,9 @@ AvlTree.prototype._insert = function (element, node) {
 		return new Node(element);
 	}
 	var direction = this._compare(element, node.element);
-	if (direction < 0) { // go left
+	if (direction < 0) {
 		node.left = this._insert(element, node.left);
-	} else if (direction > 0) { // go right
+	} else if (direction > 0) {
 		node.right = this._insert(element, node.right);
 	}
 	node.height = Math.max(getHeight(node.left), getHeight(node.right)) + 1;
@@ -84,45 +84,63 @@ AvlTree.prototype._leftRotate = function (node) {
 };
 
 AvlTree.prototype.delete = function (element) {
-	this._delete(element, this._root, null);
+	this._root = this._delete(element, this._root, null);
 };
 
 AvlTree.prototype._delete = function (element, node, parent) {
 	var direction = this._compare(element, node.element);
 	if (direction < 0) { // go left
-		return this._delete(element, node.left, node);
+		this._delete(element, node.left, node);
+		return this._balance(node, parent);
 	} else if (direction > 0) { // go right
-		return this._delete(element, node.right, node);
+		this._delete(element, node.right, node);
+		return this._balance(node, parent);
 	} else { // found our target element
 		if (node.left !== null && node.right !== null) {
 			var detachedNode = this._deleteWithTwoChildren(element, node.right, node);
-			if (parent.right === node) { // we are in the right child
-				parent.right = detachedNode;
-			} else { // we are in the left child
-				parent.left = detachedNode;
+			if (parent === null) {
+				return detachedNode
+			} else {
+				if (parent.right === node) { // we are in the right child
+					parent.right = detachedNode;
+				} else { // we are in the left child
+					parent.left = detachedNode;
+				}
 			}
 		} else if (node.left !== null) { // only has left
-			if (parent.right === node) {
-				parent.right = node.left;
+			if (parent === null) {
+				return node.left;
 			} else {
-				parent.left = node.left;
+				if (parent.right === node) {
+					parent.right = node.left;
+				} else {
+					parent.left = node.left;
+				}
 			}
 			node.left = null;
 		} else if (node.right !== null) { // only has right
-			if (parent.right === node) {
-				parent.right = node.right;
+			if (parent === null) {
+				return node.right;
 			} else {
-				parent.left = node.right;
+				if (parent.right === node) {
+					parent.right = node.right;
+				} else {
+					parent.left = node.right;
+				}
 			}
 			node.right = null;
 		} else { // both children are empty
-			if (parent.right === node) {
-				parent.right = null;
+			if (parent === null) {
+				return null;
 			} else {
-				parent.left = null;
+				if (parent.right === node) {
+					parent.right = null;
+				} else {
+					parent.left = null;
+				}
 			}
 		}
-		return this._balance(node, parent); // could be parent, but we need parent's parent
+		return this._balance(node, parent);
 	}
 };
 
@@ -133,7 +151,7 @@ AvlTree.prototype._deleteWithTwoChildren = function (element, node, parent) {
 		} else { // we are in the left child
 			parent.left = null;
 		}
-		return this._balance(parent); // this is the min value from the right sub tree
+		return this._balance(node, parent); // this is the min value from the right sub tree
 	} else {
 		return this._deleteWithTwoChildren(node.left, node)
 	}

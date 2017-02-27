@@ -110,13 +110,30 @@ describe('avltree-js tests', function() {
 			assert.strictEqual(tree._root.element, 1);
 			assert.strictEqual(tree._root.height, 1);
 		});
+		it('should delete the second element', function () {
+			tree.insert(1);
+			tree.insert(2);
+			tree.delete(2);
+			assert.strictEqual(tree._root.element, 1);
+			assert.strictEqual(tree._root.height, 1);
+			assert.strictEqual(tree._root.right, null);
+			assert.strictEqual(tree._root.left, null);
+		});
 		it('should delete the root from the tree', function () {
 			tree.insert(1);
 			tree.delete(1);
 			assert.strictEqual(tree._root, null);
 		});
+		it('should delete and replace the root', function () {
+			tree.insert(1);
+			tree.insert(2);
+			tree.delete(1);
+			assert.strictEqual(tree._root.element, 2);
+			assert.strictEqual(tree._root.height, 1);
+		});
 		it('should remove an element with only left children', function () {
-
+			tree.insert(3);
+			tree.insert(2);
 		});
 		it('should remove an element with only right children', function () {
 

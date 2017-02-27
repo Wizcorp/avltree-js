@@ -8,7 +8,7 @@ function AvlTree(comparisonFunc) {
 }
 module.exports = AvlTree;
 
-// TODO: should this return the node?
+// TODO: should this return the node? Or maybe put data on the node.
 AvlTree.prototype.search = function (element) {
 	return this._search(element, this._root);
 };
@@ -60,7 +60,6 @@ AvlTree.prototype._insert = function (element, node) {
 			return this._leftRotate(node);
 		}
 	}
-
 	return node;
 };
 
@@ -212,7 +211,6 @@ AvlTree.prototype._triNodeRestructure = function (x, y, z, parent) {
 	}
 	if (z === this._root) {
 		this._root = b;
-		b.parent = null
 	} else {
 		if (parent.left === z) {
 			parent.left = b;
@@ -264,7 +262,7 @@ function updateHeight(node) {
 	node.height = Math.max(getHeight(node.left), getHeight(node.right)) + 1;
 }
 
-function getBalance(node) {   // TODO: is something backwards?
+function getBalance(node) {   // TODO: is something backwards somewhere?
 	if (node != null) {
 		return (getHeight(node.right) - getHeight(node.left));
 	}

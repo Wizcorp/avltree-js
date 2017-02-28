@@ -91,10 +91,8 @@ AvlTree.prototype._delete = function (element, node, parent) {
 	var direction = this._compare(element, node.element);
 	if (direction < 0) { // go left
 		this._delete(element, node.left, node);
-		return this._balance(node, parent);
 	} else if (direction > 0) { // go right
 		this._delete(element, node.right, node);
-		return this._balance(node, parent);
 	} else { // found our target element
 		if (node.left !== null && node.right !== null) {
 			var detachedNode = this._deleteWithTwoChildren(element, node.right, node);
@@ -140,8 +138,8 @@ AvlTree.prototype._delete = function (element, node, parent) {
 				}
 			}
 		}
-		return this._balance(node, parent);
 	}
+	return this._balance(node, parent);
 };
 
 AvlTree.prototype._deleteWithTwoChildren = function (element, node, parent) {
@@ -181,16 +179,21 @@ AvlTree.prototype._balance = function (node, parent) {
 		var y = node.left;
 		var x = this._getTallestSubtree(y);
 		var newRoot = this._triNodeRestructure(x, y, z, parent);
-		updateHeight(newRoot);
+		updateHeight(z);
+		updateHeight(x);
+		updateHeight(y);
 		return newRoot;
 	} else if (balance > 1) {
 		var z = node;
 		var y = node.right;
 		var x = this._getTallestSubtree(y);
 		var newRoot = this._triNodeRestructure(x, y, z, parent);
-		updateHeight(newRoot);
+		updateHeight(z);
+		updateHeight(x);
+		updateHeight(y);
 		return newRoot;
 	}
+	updateHeight(node);
 	return node;
 };
 

@@ -110,15 +110,6 @@ describe('avltree-js tests', function() {
 			assert.strictEqual(tree._root.element, 1);
 			assert.strictEqual(tree._root.height, 1);
 		});
-		it('should delete the second element', function () {
-			tree.insert(1);
-			tree.insert(2);
-			tree.delete(2);
-			assert.strictEqual(tree._root.element, 1);
-			assert.strictEqual(tree._root.height, 1);
-			assert.strictEqual(tree._root.right, null);
-			assert.strictEqual(tree._root.left, null);
-		});
 		it('should delete the root from the tree', function () {
 			tree.insert(1);
 			tree.delete(1);
@@ -134,12 +125,84 @@ describe('avltree-js tests', function() {
 		it('should remove an element with only left children', function () {
 			tree.insert(3);
 			tree.insert(2);
+			assert.strictEqual(tree._root.height, 2);
+			assert.strictEqual(tree._root.left.height, 1);
+			tree.delete(2);
+			assert.strictEqual(tree._root.element, 3);
+			assert.strictEqual(tree._root.height, 1);
 		});
 		it('should remove an element with only right children', function () {
-
+			tree.insert(1);
+			tree.insert(2);
+			tree.delete(2);
+			assert.strictEqual(tree._root.element, 1);
+			assert.strictEqual(tree._root.height, 1);
+			assert.strictEqual(tree._root.right, null);
+			assert.strictEqual(tree._root.left, null);
+		});
+		it('should balance a large tree', function () {
+			tree.insert(50);
+			tree.insert(25);
+			tree.insert(75);
+			tree.insert(10);
+			tree.insert(30);
+			tree.insert(60);
+			tree.insert(80);
+			tree.insert(5);
+			tree.insert(15);
+			tree.insert(27);
+			tree.insert(55);
+			tree.insert(1);
+			assert.strictEqual(tree._root.element, 50);
+			assert.strictEqual(tree._root.height, 5);
+			assert.strictEqual(tree._root.left.element, 25);
+			assert.strictEqual(tree._root.left.height, 4);
+			assert.strictEqual(tree._root.right.element, 75);
+			assert.strictEqual(tree._root.right.height, 3);
+			assert.strictEqual(tree._root.left.left.element, 10);
+			assert.strictEqual(tree._root.left.left.height, 3);
+			assert.strictEqual(tree._root.left.right.element, 30);
+			assert.strictEqual(tree._root.left.right.height, 2);
+			assert.strictEqual(tree._root.right.left.element, 60);
+			assert.strictEqual(tree._root.right.left.height, 2);
+			assert.strictEqual(tree._root.right.right.element, 80);
+			assert.strictEqual(tree._root.right.right.height, 1);
+			assert.strictEqual(tree._root.left.left.left.element, 5);
+			assert.strictEqual(tree._root.left.left.left.height, 2);
+			assert.strictEqual(tree._root.left.left.right.element, 15);
+			assert.strictEqual(tree._root.left.left.right.height, 1);
+			assert.strictEqual(tree._root.left.right.left.element, 27);
+			assert.strictEqual(tree._root.left.right.left.height, 1);
+			assert.strictEqual(tree._root.right.left.left.element, 55);
+			assert.strictEqual(tree._root.right.left.left.height, 1);
+			assert.strictEqual(tree._root.left.left.left.left.element, 1);
+			assert.strictEqual(tree._root.left.left.left.left.height, 1);
+			tree.delete(80);
+			assert.strictEqual(tree._root.element, 25);
+			assert.strictEqual(tree._root.height, 4);
+			assert.strictEqual(tree._root.left.element, 10);
+			assert.strictEqual(tree._root.left.height, 3);
+			assert.strictEqual(tree._root.right.element, 50);
+			assert.strictEqual(tree._root.right.height, 3);
+			assert.strictEqual(tree._root.left.left.element, 5);
+			assert.strictEqual(tree._root.left.left.height, 2);
+			assert.strictEqual(tree._root.left.right.element, 15);
+			assert.strictEqual(tree._root.left.right.height, 1);
+			assert.strictEqual(tree._root.right.left.element, 30);
+			assert.strictEqual(tree._root.right.left.height, 2);
+			assert.strictEqual(tree._root.right.right.element, 60);
+			assert.strictEqual(tree._root.right.right.height, 2);
+			assert.strictEqual(tree._root.left.left.left.element, 1);
+			assert.strictEqual(tree._root.left.left.left.height, 1);
+			assert.strictEqual(tree._root.right.left.left.element, 27);
+			assert.strictEqual(tree._root.right.left.left.height, 1);
+			assert.strictEqual(tree._root.right.right.left.element, 55);
+			assert.strictEqual(tree._root.right.right.left.height, 1);
+			assert.strictEqual(tree._root.right.right.right.element, 75);
+			assert.strictEqual(tree._root.right.right.right.height, 1);
 		});
 		it('should remove an element with two children', function () {
-
+			assert.strictEqual(false, true);
 		});
 	});
 });

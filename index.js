@@ -95,7 +95,7 @@ AvlTree.prototype._delete = function (element, node, parent) {
 		this._delete(element, node.right, node);
 	} else { // found our target element
 		if (node.left !== null && node.right !== null) {
-			var detachedNode = this._deleteWithTwoChildren(element, node.right, node);
+			var detachedNode = this._detachMaxAndBalance(node.left, node);
 			if (parent === null) {
 				return detachedNode
 			} else {
@@ -139,19 +139,23 @@ AvlTree.prototype._delete = function (element, node, parent) {
 			}
 		}
 	}
-	return this._balance(node, parent);
+	return this._balance(node, parent); // backtrack and balance everyone
 };
 
-AvlTree.prototype._deleteWithTwoChildren = function (element, node, parent) {
-	if (node.left === null) {
-		if (parent.right === node) { // we are in the right child
+AvlTree.prototype._detachMaxAndBalance = function (node, parent) {
+	if (node.right === null) { // max found
+		if (parent.right === node) {
 			parent.right = null;
-		} else { // we are in the left child
+		} else {
 			parent.left = null;
 		}
-		return this._balance(node, parent); // this is the min value from the right sub tree
-	} else {
-		return this._deleteWithTwoChildren(node.left, node)
+		node.left = parent.left;
+		node.right = parent.right;
+		return this._balance(node, parent); // TODO: might not need this balance
+	} else { // not yet at max, keep going
+		var detachedNode = this._detachMaxAndBalance(node.right, node);
+		this._balance(node, parent);  // backtrack and balance everyone in the left sub tree
+		return detachedNode;
 	}
 };
 
@@ -283,7 +287,7 @@ function updateHeight(node) {
 	node.height = Math.max(getHeight(node.left), getHeight(node.right)) + 1;
 }
 
-function getBalance(node) {   // TODO: is something backwards somewhere?
+function getBalance(node) {
 	if (node != null) {
 		return (getHeight(node.right) - getHeight(node.left));
 	}

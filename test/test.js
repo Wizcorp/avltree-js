@@ -202,7 +202,34 @@ describe('avltree-js tests', function() {
 			assert.strictEqual(tree._root.right.right.right.height, 1);
 		});
 		it('should remove an element with two children', function () {
-			assert.strictEqual(false, true);
+			tree.insert(1);
+			tree.insert(2);
+			tree.insert(3);
+			tree.insert(4);
+			tree.insert(5);
+			tree.delete(4);
+
+			assert.strictEqual(tree._root.element, 2);
+			assert.strictEqual(tree._root.height, 3);
+			assert.strictEqual(tree._root.left.element, 1);
+			assert.strictEqual(tree._root.left.height, 1);
+			assert.strictEqual(tree._root.right.element, 3);
+			assert.strictEqual(tree._root.right.height, 2);
+			assert.strictEqual(tree._root.right.right.element, 5);
+			assert.strictEqual(tree._root.right.right.height, 1);
+		});
+		it('should remove an element with two children, with a large tree', function () {
+			assert.strictEqual(true, false);
+		});
+		it('should remove the root element with two children', function () {
+			tree.insert(1);
+			tree.insert(2);
+			tree.insert(3);
+			tree.delete(2);
+
+			assert.strictEqual(tree._root.element, 1);
+			assert.strictEqual(tree._root.left, null);
+			assert.strictEqual(tree._root.right.element, 3);
 		});
 	});
 });

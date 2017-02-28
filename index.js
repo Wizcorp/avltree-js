@@ -97,7 +97,7 @@ AvlTree.prototype._delete = function (element, node, parent) {
 		if (node.left !== null && node.right !== null) {
 			var detachedNode = this._detachMaxAndBalance(node.left, node);
 			if (parent === null) {
-				return detachedNode
+				this._root = detachedNode;
 			} else {
 				if (parent.right === node) { // we are in the right child
 					parent.right = detachedNode;
@@ -105,6 +105,9 @@ AvlTree.prototype._delete = function (element, node, parent) {
 					parent.left = detachedNode;
 				}
 			}
+			detachedNode.left = node.left;
+			detachedNode.right = node.right;
+			return this._balance(detachedNode, parent);
 		} else if (node.left !== null) { // only has left
 			if (parent === null) {
 				return node.left;
@@ -149,9 +152,7 @@ AvlTree.prototype._detachMaxAndBalance = function (node, parent) {
 		} else {
 			parent.left = null;
 		}
-		node.left = parent.left;
-		node.right = parent.right;
-		return this._balance(node, parent); // TODO: might not need this balance
+		return this._balance(node, parent); // TODO: need this balance?
 	} else { // not yet at max, keep going
 		var detachedNode = this._detachMaxAndBalance(node.right, node);
 		this._balance(node, parent);  // backtrack and balance everyone in the left sub tree
@@ -210,8 +211,6 @@ AvlTree.prototype._getTallestSubtree = function (node) {
 	}
 };
 
-//Input: Unbalanced node z , y is the taller child of z, x is the taller child of y, parent is parent of z
-//Output: position of the node that goes in the place of z when finished
 AvlTree.prototype._triNodeRestructure = function (x, y, z, parent) {
 	var a, b, c;
 	if (z.right === y && y.left === x) {

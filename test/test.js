@@ -228,8 +228,10 @@ describe('avltree-js tests', function() {
 			tree.delete(2);
 
 			assert.strictEqual(tree._root.element, 1);
+			assert.strictEqual(tree._root.height, 2);
 			assert.strictEqual(tree._root.left, null);
 			assert.strictEqual(tree._root.right.element, 3);
+			assert.strictEqual(tree._root.right.height, 1);
 		});
 	});
 });

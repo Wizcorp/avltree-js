@@ -96,6 +96,15 @@ describe('avltree-js tests', function() {
 			var targetNode = tree.search(target, root);
 			assert.strictEqual(targetNode.element, target);
 		});
+		it('should return null if the tree is empty', function () {
+			var result = tree.search(5);
+			assert.strictEqual(result, null);
+		});
+		it('should return null if the element is not in the tree', function () {
+			tree.insert(4);
+			var result = tree.search(5);
+			assert.strictEqual(result, null);
+		});
 	});
 	describe('delete', function () {
 		var tree;
@@ -662,6 +671,13 @@ describe('avltree-js tests', function() {
 			assert.strictEqual(tree._root.right.left.height, 1);
 			assert.strictEqual(tree._root.right.right.element, 10);
 			assert.strictEqual(tree._root.right.right.height, 1);
+		});
+		it('should not crash if the tree is empty', function () {
+			tree.delete(5);
+		});
+		it('should not crash if the element is not in the tree', function () {
+			tree.insert(4);
+			tree.delete(5);
 		});
 	});
 });

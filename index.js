@@ -14,6 +14,9 @@ AvlTree.prototype.search = function (element) {
 };
 
 AvlTree.prototype._search = function (element, node) {
+	if (node === null) {
+		return null;
+	}
 	var direction = this._compare(element, node.element);
 	if (direction < 0) {
 		return this._search(element, node.left);
@@ -84,10 +87,15 @@ AvlTree.prototype._leftRotate = function (node) {
 };
 
 AvlTree.prototype.delete = function (element) {
-	this._root = this._delete(element, this._root, null);
+	if (this._root !== null) {
+		this._root = this._delete(element, this._root, null);
+	}
 };
 
 AvlTree.prototype._delete = function (element, node, parent) {
+	if (node === null) {
+		return null;
+	}
 	var direction = this._compare(element, node.element);
 	if (direction < 0) { // go left
 		this._delete(element, node.left, node);

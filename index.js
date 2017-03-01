@@ -95,19 +95,8 @@ AvlTree.prototype._delete = function (element, node, parent) {
 		this._delete(element, node.right, node);
 	} else { // found our target element
 		if (node.left !== null && node.right !== null) {
-			var detachedNode = this._detachMaxAndBalance(node.left, node);
-			if (parent === null) {
-				this._root = detachedNode;
-			} else {
-				if (parent.right === node) { // we are in the right child
-					parent.right = detachedNode;
-				} else { // we are in the left child
-					parent.left = detachedNode;
-				}
-			}
-			detachedNode.left = node.left;
-			detachedNode.right = node.right;
-			return this._balance(detachedNode, parent);
+			var detachedMax = this._deleteMax(node.left, node);
+			node.element = detachedMax.element; // TODO: if we end up adding data to nodes, copy it here
 		} else if (node.left !== null) { // only has left
 			if (parent === null) {
 				return node.left;
@@ -145,18 +134,19 @@ AvlTree.prototype._delete = function (element, node, parent) {
 	return this._balance(node, parent); // backtrack and balance everyone
 };
 
-AvlTree.prototype._detachMaxAndBalance = function (node, parent) {
+AvlTree.prototype.deleteMax = function () {
+	return this._deleteMax(this._root, null).element;
+};
+
+AvlTree.prototype._deleteMax = function (node, parent) {
 	if (node.right === null) { // max found
-		if (parent.right === node) {
-			parent.right = null;
-		} else {
-			parent.left = null;
-		}
-		return this._balance(node, parent); // TODO: need this balance?
+		var max = this._delete(node.element, node, parent);
+		this._balance(node, parent);
+		return max;
 	} else { // not yet at max, keep going
-		var detachedNode = this._detachMaxAndBalance(node.right, node);
+		var max = this._deleteMax(node.right, node);
 		this._balance(node, parent);  // backtrack and balance everyone in the left sub tree
-		return detachedNode;
+		return max;
 	}
 };
 

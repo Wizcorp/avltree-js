@@ -315,20 +315,6 @@ describe('avltree-js tests', function() {
 			assert.strictEqual(tree._root.left.right.right.left.height, 1);
 			assert.strictEqual(tree._root.left.right.right.right.element, 15);
 			assert.strictEqual(tree._root.left.right.right.right.height, 1);
-			//assert.strictEqual(tree._root.right.left.left.left.element, );
-			//assert.strictEqual(tree._root.right.left.left.left.height, );
-			//assert.strictEqual(tree._root.right.left.left.right.element, );
-			//assert.strictEqual(tree._root.right.left.left.right.height, );
-			//assert.strictEqual(tree._root.right.left.right.left.element, );
-			//assert.strictEqual(tree._root.right.left.right.left.height, );
-			//assert.strictEqual(tree._root.right.left.right.right.element, );
-			//assert.strictEqual(tree._root.right.left.right.right.height, );
-			//assert.strictEqual(tree._root.right.right.left.left.element, );
-			//assert.strictEqual(tree._root.right.right.left.left.height, );
-			//assert.strictEqual(tree._root.right.right.left.right.element, );
-			//assert.strictEqual(tree._root.right.right.left.right.height, );
-			//assert.strictEqual(tree._root.right.right.left.right.element, );
-			//assert.strictEqual(tree._root.right.right.left.right.height, );
 			assert.strictEqual(tree._root.right.right.right.right.element, 24);
 			assert.strictEqual(tree._root.right.right.right.right.height, 1);
 
@@ -352,21 +338,12 @@ describe('avltree-js tests', function() {
 			assert.strictEqual(tree._root.right.right.left.element, 21);
 			assert.strictEqual(tree._root.right.right.right.element, 23);
 
-			//assert.strictEqual(tree._root.left.left.left.left.element, );
-			//assert.strictEqual(tree._root.left.left.left.right.element, );
 			assert.strictEqual(tree._root.left.left.right.left.element, 5);
 			assert.strictEqual(tree._root.left.left.right.right.element, 7);
 			assert.strictEqual(tree._root.left.right.left.left.element, 9);
 			assert.strictEqual(tree._root.left.right.left.right.element, 11);
 			assert.strictEqual(tree._root.left.right.right.left.element, 13);
 			assert.strictEqual(tree._root.left.right.right.right.element, 15);
-			//assert.strictEqual(tree._root.right.left.left.left.element, );
-			//assert.strictEqual(tree._root.right.left.left.right.element, );
-			//assert.strictEqual(tree._root.right.left.right.left.element, );
-			//assert.strictEqual(tree._root.right.left.right.right.element, );
-			//assert.strictEqual(tree._root.right.right.left.left.element, );
-			//assert.strictEqual(tree._root.right.right.left.right.element, );
-			//assert.strictEqual(tree._root.right.right.right.left.element, );
 			assert.strictEqual(tree._root.right.right.right.right.element, 24);
 
 			tree.delete(2);
@@ -390,21 +367,10 @@ describe('avltree-js tests', function() {
 			assert.strictEqual(tree._root.right.right.left.element, 21);
 			assert.strictEqual(tree._root.right.right.right.element, 23);
 
-			//assert.strictEqual(tree._root.left.left.left.left.element, );
-			//assert.strictEqual(tree._root.left.left.left.right.element, );
-			//assert.strictEqual(tree._root.left.left.right.left.element, );
-			//assert.strictEqual(tree._root.left.left.right.right.element, );
 			assert.strictEqual(tree._root.left.right.left.left.element, 9);
 			assert.strictEqual(tree._root.left.right.left.right.element, 11);
 			assert.strictEqual(tree._root.left.right.right.left.element, 13);
 			assert.strictEqual(tree._root.left.right.right.right.element, 15);
-			//assert.strictEqual(tree._root.right.left.left.left.element, );
-			//assert.strictEqual(tree._root.right.left.left.right.element, );
-			//assert.strictEqual(tree._root.right.left.right.left.element, );
-			//assert.strictEqual(tree._root.right.left.right.right.element, );
-			//assert.strictEqual(tree._root.right.right.left.left.element, );
-			//assert.strictEqual(tree._root.right.right.left.right.element, );
-			//assert.strictEqual(tree._root.right.right.right.left.element, );
 			assert.strictEqual(tree._root.right.right.right.right.element, 24);
 		});
 		it('should remove an element with two children, with a large tree, near root', function () {
@@ -460,8 +426,6 @@ describe('avltree-js tests', function() {
 			assert.strictEqual(tree._root.left.right.right.height, 2);
 			assert.strictEqual(tree._root.right.left.left.element, 17);
 			assert.strictEqual(tree._root.right.left.left.height, 1);
-			//assert.strictEqual(tree._root.right.left.right.element, );
-			//assert.strictEqual(tree._root.right.left.right.height, );
 			assert.strictEqual(tree._root.right.right.left.element, 21);
 			assert.strictEqual(tree._root.right.right.left.height, 1);
 			assert.strictEqual(tree._root.right.right.right.element, 23);
@@ -483,20 +447,6 @@ describe('avltree-js tests', function() {
 			assert.strictEqual(tree._root.left.right.right.left.height, 1);
 			assert.strictEqual(tree._root.left.right.right.right.element, 15);
 			assert.strictEqual(tree._root.left.right.right.right.height, 1);
-			// assert.strictEqual(tree._root.right.left.left.left.element, );
-			// assert.strictEqual(tree._root.right.left.left.left.height, );
-			// assert.strictEqual(tree._root.right.left.left.right.element, );
-			// assert.strictEqual(tree._root.right.left.left.right.height, );
-			// assert.strictEqual(tree._root.right.left.right.left.element, );
-			// assert.strictEqual(tree._root.right.left.right.left.height, );
-			// assert.strictEqual(tree._root.right.left.right.right.element, );
-			// assert.strictEqual(tree._root.right.left.right.right.height, );
-			// assert.strictEqual(tree._root.right.right.left.left.element, );
-			// assert.strictEqual(tree._root.right.right.left.left.height, );
-			// assert.strictEqual(tree._root.right.right.left.right.element, );
-			// assert.strictEqual(tree._root.right.right.left.right.height, );
-			// assert.strictEqual(tree._root.right.right.left.right.element, );
-			// assert.strictEqual(tree._root.right.right.left.right.height, );
 			assert.strictEqual(tree._root.right.right.right.right.element, 24);
 			assert.strictEqual(tree._root.right.right.right.right.height, 1);
 		});
@@ -574,22 +524,6 @@ describe('avltree-js tests', function() {
 			assert.strictEqual(tree._root.left.right.left.right.height, 1);
 			assert.strictEqual(tree._root.left.right.right.left.element, 13);
 			assert.strictEqual(tree._root.left.right.right.left.height, 1);
-			// assert.strictEqual(tree._root.left.right.right.right.element, );
-			// assert.strictEqual(tree._root.left.right.right.right.height, );
-			// assert.strictEqual(tree._root.right.left.left.left.element, );
-			// assert.strictEqual(tree._root.right.left.left.left.height, );
-			// assert.strictEqual(tree._root.right.left.left.right.element, );
-			// assert.strictEqual(tree._root.right.left.left.right.height, );
-			// assert.strictEqual(tree._root.right.left.right.left.element, );
-			// assert.strictEqual(tree._root.right.left.right.left.height, );
-			// assert.strictEqual(tree._root.right.left.right.right.element, );
-			// assert.strictEqual(tree._root.right.left.right.right.height, );
-			// assert.strictEqual(tree._root.right.right.left.left.element, );
-			// assert.strictEqual(tree._root.right.right.left.left.height, );
-			// assert.strictEqual(tree._root.right.right.left.right.element, );
-			// assert.strictEqual(tree._root.right.right.left.right.height, );
-			// assert.strictEqual(tree._root.right.right.left.right.element, );
-			// assert.strictEqual(tree._root.right.right.left.right.height, );
 			assert.strictEqual(tree._root.right.right.right.right.element, 24);
 			assert.strictEqual(tree._root.right.right.right.right.height, 1);
 		});
@@ -614,8 +548,6 @@ describe('avltree-js tests', function() {
 			assert.strictEqual(tree._root.left.left.height, 1);
 			assert.strictEqual(tree._root.left.right.element, 4);
 			assert.strictEqual(tree._root.left.right.height, 1);
-			//assert.strictEqual(tree._root.right.left.element, );
-			//assert.strictEqual(tree._root.right.left.height, );
 			assert.strictEqual(tree._root.right.right.element, 11);
 			assert.strictEqual(tree._root.right.right.height, 1);
 		});
@@ -640,8 +572,6 @@ describe('avltree-js tests', function() {
 			assert.strictEqual(tree._root.left.left.height, 1);
 			assert.strictEqual(tree._root.left.right.element, 4);
 			assert.strictEqual(tree._root.left.right.height, 1);
-			//assert.strictEqual(tree._root.right.left.element, );
-			//assert.strictEqual(tree._root.right.left.height, );
 			assert.strictEqual(tree._root.right.right.element, 11);
 			assert.strictEqual(tree._root.right.right.height, 1);
 		});
@@ -663,8 +593,6 @@ describe('avltree-js tests', function() {
 			assert.strictEqual(tree._root.right.element, 5);
 			assert.strictEqual(tree._root.right.height, 2);
 
-			//assert.strictEqual(tree._root.left.left.element, );
-			//assert.strictEqual(tree._root.left.left.height, );
 			assert.strictEqual(tree._root.left.right.element, 2);
 			assert.strictEqual(tree._root.left.right.height, 1);
 			assert.strictEqual(tree._root.right.left.element, 4);

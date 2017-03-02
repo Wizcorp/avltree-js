@@ -37,6 +37,17 @@ describe('avltree-js tests', function() {
 			assert.strictEqual(tree._root.right.height, 1);
 		});
 		it('should balance a right left heavy tree', function () {
+			tree.insert(1);
+			tree.insert(3);
+			tree.insert(2);
+			assert.strictEqual(tree._root.element, 2);
+			assert.strictEqual(tree._root.left.element, 1);
+			assert.strictEqual(tree._root.right.element, 3);
+			assert.strictEqual(tree._root.height, 2);
+			assert.strictEqual(tree._root.left.height, 1);
+			assert.strictEqual(tree._root.right.height, 1);
+		});
+		it('should balance a right left heavy tree', function () {
 			tree.insert(3);
 			tree.insert(1);
 			tree.insert(2);
@@ -301,8 +312,6 @@ describe('avltree-js tests', function() {
 
 			assert.strictEqual(tree._root.left.left.left.left.element, 1);
 			assert.strictEqual(tree._root.left.left.left.left.height, 1);
-			//assert.strictEqual(tree._root.left.left.left.right.element, );
-			//assert.strictEqual(tree._root.left.left.left.right.height, );
 			assert.strictEqual(tree._root.left.left.right.left.element, 5);
 			assert.strictEqual(tree._root.left.left.right.left.height, 1);
 			assert.strictEqual(tree._root.left.left.right.right.element, 7);

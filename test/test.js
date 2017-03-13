@@ -357,7 +357,7 @@ describe('avltree-js tests', function() {
 
 			tree.delete(2);
 			tree.delete(6);
-			assert.strictEqual(tree._root.element, 16);
+			assert.strictEqual(tree._root.element, 16); // TODO: check heights!
 
 			assert.strictEqual(tree._root.left.element, 8);
 			assert.strictEqual(tree._root.right.element, 20);

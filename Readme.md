@@ -7,6 +7,9 @@ Supports all basic operations and custom sort comparison functions.
 * search
 * forEach
 
+* getMin
+* getMax
+* deleteMax
 
 Tests are run using mocha in the test directory.
 

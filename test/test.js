@@ -617,4 +617,25 @@ describe('avltree-js tests', function() {
 			tree.delete(5);
 		});
 	});
+	describe('forEach', function () {
+		var tree;
+		beforeEach(function () {
+			tree = new AvlTree();
+		});
+		it('should iterate the tree in order', function () {
+			tree.insert(5);
+			tree.insert(3);
+			tree.insert(10);
+			tree.insert(1);
+			tree.insert(4);
+			tree.insert(11);
+			tree.insert(2);
+			var expected = [1, 2, 3, 4, 5, 10, 11];
+			var i = 0;
+			tree.forEach(function (element) {
+				assert.strictEqual(element, expected[i])
+				i++;
+			});
+		});
+	});
 });

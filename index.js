@@ -251,10 +251,16 @@ AvlTree.prototype._triNodeRestructure = function (x, y, z, parent) {
 	return b;
 };
 
-AvlTree.prototype.forEach = function (node, func) {
-	this.forEach(node.left, func);
-	func(node.element);
-	this.forEach(node.right, func);
+AvlTree.prototype.forEach = function (func) {
+	this._forEach(this._root, func);
+};
+
+AvlTree.prototype._forEach = function (node, func) {
+	if (node !== null) {
+		this._forEach(node.left, func);
+		func(node.element);
+		this._forEach(node.right, func);
+	}
 };
 
 function Node(element) {

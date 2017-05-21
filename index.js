@@ -8,9 +8,10 @@ function AvlTree(comparisonFunc) {
 }
 module.exports = AvlTree;
 
-// TODO: should this return the node? Or maybe put data on the node.
+// TODO: put data on the node.
 AvlTree.prototype.search = function (element) {
-	return this._search(element, this._root);
+	var node = this._search(element, this._root);
+	return node ? node.element : null;
 };
 
 AvlTree.prototype._search = function (element, node) {
@@ -166,7 +167,7 @@ AvlTree.prototype.getMin = function (node) {
 	}
 };
 
-AvlTree.prototype.getMax = function (element, node) {
+AvlTree.prototype.getMax = function (node) {
 	if (node.right === null) {
 		return node;
 	} else {
@@ -261,6 +262,24 @@ AvlTree.prototype._forEach = function (node, func) {
 		func(node.element);
 		this._forEach(node.right, func);
 	}
+};
+
+AvlTree.prototype.getElementsAtDepth = function (targetDepth) {
+	var foundNodes = [];
+	this._getElementsAtDepth(targetDepth, 0, this._root, foundNodes);
+	return foundNodes;
+};
+
+AvlTree.prototype._getElementsAtDepth = function (targetDepth, current, node, foundNodes) {
+	if (node === null) {
+		return;
+	}
+	if (targetDepth === current) {
+		foundNodes.push(node.element);
+		return;
+	}
+	this._getElementsAtDepth(targetDepth, current + 1, node.left, foundNodes);
+	this._getElementsAtDepth(targetDepth, current + 1, node.right, foundNodes);
 };
 
 function Node(element) {

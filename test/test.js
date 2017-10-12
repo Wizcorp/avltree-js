@@ -758,6 +758,43 @@ describe('avltree-js tests', function() {
 			assert.strictEqual(nodesAtFour[6], 13);
 			assert.strictEqual(nodesAtFour[7], 15);
 			assert.strictEqual(nodesAtFour[8], 24);
-		})
+		});
+	});
+	describe('custom sort', function () {
+		it('should order objects correctly by property', function () {
+			// Create a custom sorting function that will order people by age.
+			var personSortingFunction = function (personA, personB) {
+				if (personA.age < personB.age) {
+					return -1
+				} else if (personA.age > personB.age) {
+					return 1;
+				}
+				return 0;
+			};
+
+			// pass in the custom sorting function the the tree's constructor
+			var personTree = new AvlTree(personSortingFunction);
+
+			// create some test people to add to the tree
+			var person1 = { age: 1 };
+			var person2 = { age: 2 };
+			var person3 = { age: 3 };
+			var person4 = { age: 4 };
+
+			// add the people to the tree in any order
+			personTree.insert(person2);
+			personTree.insert(person1);
+			personTree.insert(person4);
+			personTree.insert(person3);
+
+			var expectedOrder = [1, 2, 3, 4];
+			var actualOrder = [];
+
+			personTree.forEach(function (person) {
+				actualOrder.push(person.age);
+			});
+
+			assert.deepStrictEqual(expectedOrder, actualOrder);
+		});
 	});
 });

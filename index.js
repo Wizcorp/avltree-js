@@ -235,10 +235,13 @@ AvlTree.prototype._triNodeRestructure = function (x, y, z, parent) {
 	if (z === this._root) {
 		this._root = b;
 	} else {
-		if (parent.left === z) {
-			parent.left = b;
-		} else {
-			parent.right = b;
+		// add null checking for parent
+		if (parent !== null) {
+			if (parent.left === z) {
+				parent.left = b;
+			} else {
+				parent.right = b;
+			}
 		}
 	}
 	if (b.left !== x && b.left !== y && b.left !== z) {
@@ -289,6 +292,31 @@ function Node(element) {
 	this.right  = null;
 }
 
+Node.prototype.copy = function () {
+	var left = new Node();
+	var right = new Node();
+	
+	if (this.left != null) {
+		left = this.left.copy();
+	}
+	if (this.right != null) {
+		right = this.right.copy();
+	}
+	
+	var copiedNode = new Node(this.element);
+	copiedNode.height = this.height;
+	copiedNode.left = left;
+	copiedNode.right = right;
+	
+	return copiedNode;
+}
+
+AvlTree.prototype.copy = function () {
+	var copiedAvlTree = new AvlTree(this._compare);
+	copiedAvlTree._root = this._root.copy();
+	return copiedAvlTree;
+}
+
 function sortLeftToRight(a, b) {
 	if (a < b) {
 		return -1
@@ -316,4 +344,48 @@ function getBalance(node) {
 	return 0;
 }
 
-//TODO: union, intersection and set difference, helpers, Split and Join
+// join returns a copy instead of modifying the current trees
+AvlTree.prototype.join = function (element, node2) {
+	var tree1 = this.copy();
+	var tree2 = node2.copy();
+	
+	var keyNode = new Node(element);
+	
+	var heightTree1 = tree1._root.height;
+	var heightTree2 = tree2._root.height;
+	
+	if (Math.abs(heightTree1 - heightTree2) <= 1) {
+		var joinedTree = new AvlTree(this._compare);
+		keyNode.left = tree1._root;
+		keyNode.right = tree2._root;
+		updateHeight(keyNode);
+		joinedTree._root = keyNode;
+		return joinedTree;
+	}
+	
+	var joinedTree = new AvlTree(this._compare);
+	joinedTree._root = tree1._root;
+	var currNode;
+	var parentNode;
+	
+	if (heightTree1 > heightTree2) {
+		currNode = tree1._root;
+		
+		while (currNode.height > heightTree2 + 1) {
+			parentNode = currNode;
+			currNode = currNode.right;
+		}
+		
+		keyNode.left = currNode;
+		keyNode.right = tree2._root;
+		updateHeight(keyNode);
+		parentNode.right = keyNode;
+		
+		joinedTree._balance(joinedTree._root, null);
+		updateHeight(joinedTree._root);
+	}
+	
+	return joinedTree;	
+};
+
+//TODO: union, intersection and set difference, helpers, Split

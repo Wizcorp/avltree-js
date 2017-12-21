@@ -39,6 +39,11 @@ Supports all basic operations and custom sort comparison functions.
 	var nodesAtZero = tree.getElementsAtDepth(0);
 ```
 	returns an array of elements at depth 0 (in this case, the root);
+* copy
+```javascript
+	var copy = tree.copy();
+```
+	returns a deep copy of the tree.
 
 * Storing objects in the tree
 	by using a custom ordering function, you can easily store objects in the tree, ordered by some property.

@@ -797,4 +797,111 @@ describe('avltree-js tests', function() {
 			assert.deepStrictEqual(expectedOrder, actualOrder);
 		});
 	});
+	describe('copy', function () {
+		var tree;
+		beforeEach(function () {
+			tree = new AvlTree();
+		});
+		it('should do deep copy correctly', function () {
+			tree.insert(1);
+			tree.insert(2);
+			tree.insert(3);
+			tree.insert(4);
+			
+			var copyTree = tree.copy();
+			
+			// make modifications to old tree
+			tree.insert(5);
+			tree.insert(6);
+			tree.insert(7);
+			
+			// copied tree should stay the same
+			assert.strictEqual(copyTree._root.element, 2);
+			assert.strictEqual(copyTree._root.height, 3);
+			assert.strictEqual(copyTree._root.left.element, 1);
+			assert.strictEqual(copyTree._root.left.height, 1);
+			assert.strictEqual(copyTree._root.right.element, 3);
+			assert.strictEqual(copyTree._root.right.height, 2);
+			assert.strictEqual(copyTree._root.right.right.element, 4);
+			assert.strictEqual(copyTree._root.right.right.height, 1);
+		});
+	});
+	describe('helpers for set operations', function () {
+		var tree1, tree2;
+		beforeEach(function () {
+			tree1 = new AvlTree();
+			tree2 = new AvlTree();
+		});
+		it('should do join properly on trees with height difference <= 1', function () {
+			tree1.insert(1);
+			tree1.insert(2);
+			tree1.insert(3);
+			tree1.insert(4);
+			
+			tree2.insert(9);
+			tree2.insert(10);
+			tree2.insert(11);
+			
+			var joinedTree = tree1.join(6, tree2);
+			
+			assert.strictEqual(joinedTree._root.element, 6);
+			assert.strictEqual(joinedTree._root.height, 4);
+			assert.strictEqual(joinedTree._root.left.element, 2);
+			assert.strictEqual(joinedTree._root.left.height, 3);
+			assert.strictEqual(joinedTree._root.left.left.element, 1);
+			assert.strictEqual(joinedTree._root.left.left.height, 1);
+			assert.strictEqual(joinedTree._root.left.right.element, 3);
+			assert.strictEqual(joinedTree._root.left.right.height, 2);
+			assert.strictEqual(joinedTree._root.left.right.right.element, 4);
+			assert.strictEqual(joinedTree._root.left.right.right.height, 1);
+			assert.strictEqual(joinedTree._root.right.element, 10);
+			assert.strictEqual(joinedTree._root.right.height, 2);
+			assert.strictEqual(joinedTree._root.right.left.element, 9);
+			assert.strictEqual(joinedTree._root.right.left.height, 1);
+			assert.strictEqual(joinedTree._root.right.right.element, 11);
+			assert.strictEqual(joinedTree._root.right.right.height, 1);
+		});
+		it('should do join properly on trees with height difference > 1', function () {
+			tree1.insert(1);
+			tree1.insert(2);
+			tree1.insert(3);
+			tree1.insert(4);
+			tree1.insert(5);
+			tree1.insert(6);
+			tree1.insert(7);
+			tree1.insert(8);
+			
+			tree2.insert(10);
+			tree2.insert(11);
+			tree2.insert(12);
+			
+			var joinedTree = tree1.join(9, tree2);
+			
+			assert.strictEqual(joinedTree._root.element, 6);
+			assert.strictEqual(joinedTree._root.height, 4);
+			assert.strictEqual(joinedTree._root.left.element, 4);
+			assert.strictEqual(joinedTree._root.left.height, 3);
+			assert.strictEqual(joinedTree._root.left.left.element, 2);
+			assert.strictEqual(joinedTree._root.left.left.height, 2);
+			assert.strictEqual(joinedTree._root.left.right.element, 5);
+			assert.strictEqual(joinedTree._root.left.right.height, 1);
+			assert.strictEqual(joinedTree._root.left.left.left.element, 1);
+			assert.strictEqual(joinedTree._root.left.left.left.height, 1);
+			assert.strictEqual(joinedTree._root.left.left.right.element, 3);
+			assert.strictEqual(joinedTree._root.left.left.right.height, 1);
+			
+			assert.strictEqual(joinedTree._root.right.element, 9);
+			assert.strictEqual(joinedTree._root.right.height, 3);
+			assert.strictEqual(joinedTree._root.right.left.element, 7);
+			assert.strictEqual(joinedTree._root.right.left.height, 2);
+			assert.strictEqual(joinedTree._root.right.right.element, 11);
+			assert.strictEqual(joinedTree._root.right.right.height, 2);
+			assert.strictEqual(joinedTree._root.right.left.right.element, 8);
+			assert.strictEqual(joinedTree._root.right.left.right.height, 1);
+			assert.strictEqual(joinedTree._root.right.right.left.element, 10);
+			assert.strictEqual(joinedTree._root.right.right.left.height, 1);
+			assert.strictEqual(joinedTree._root.right.right.right.element, 12);
+			assert.strictEqual(joinedTree._root.right.right.right.height, 1);
+		});
+	});
 });

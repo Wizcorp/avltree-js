@@ -1,7 +1,8 @@
+'use strict';
 var assert = require('assert');
 var AvlTree = require('../index.js');
 
-describe('avltree-js tests', function() {
+describe('avltree-js tests', function () {
 	describe('insert', function () {
 		var tree;
 		beforeEach(function () {
@@ -633,12 +634,13 @@ describe('avltree-js tests', function() {
 			var expected = [1, 2, 3, 4, 5, 10, 11];
 			var i = 0;
 			tree.forEach(function (element) {
-				assert.strictEqual(element, expected[i])
-				i++;
+				assert.strictEqual(element, expected[i]);
+				i += 1;
 			});
 		});
 	});
 	describe('getElementsAtDepth', function () {
+		var tree;
 		beforeEach(function () {
 			tree = new AvlTree();
 		});
@@ -763,14 +765,14 @@ describe('avltree-js tests', function() {
 	describe('custom sort', function () {
 		it('should order objects correctly by property', function () {
 			// Create a custom sorting function that will order people by age.
-			var personSortingFunction = function (personA, personB) {
+			function personSortingFunction(personA, personB) {
 				if (personA.age < personB.age) {
-					return -1
+					return -1;
 				} else if (personA.age > personB.age) {
 					return 1;
 				}
 				return 0;
-			};
+			}
 
 			// pass in the custom sorting function the the tree's constructor
 			var personTree = new AvlTree(personSortingFunction);

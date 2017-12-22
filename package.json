@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
+    "lint": "eslint .",
     "speedTest": "node ./speedTest/speedTest.js"
   },
   "repository": {
@@ -14,7 +15,14 @@
   "author": "John Ferreira",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "4.12.1",
+    "eslint-plugin-es5": "1.1.0",
     "git-message": "^2.0.2",
-    "mocha": "^4.0.1"
-  }
+    "mocha": "^4.0.1",
+    "pre-push": "0.1.1"
+  },
+  "pre-push": [
+    "test",
+    "lint"
+  ]
 }

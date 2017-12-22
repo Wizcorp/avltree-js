@@ -1,0 +1,7 @@
+node_modules/**
+**/*.min.js
+**/dist/*.js
+coverage/**
+docker/**
+@/
+html-report/

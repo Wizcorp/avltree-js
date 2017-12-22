@@ -1,16 +1,20 @@
 {
   "name": "avltree-js",
   "version": "1.2.9",
-  "description": "",
+  "description": "JavaScript implementation of AVL tree",
   "main": "index.js",
   "scripts": {
     "test": "mocha",
     "speedTest": "node ./speedTest/speedTest.js"
   },
-  "repository" :
-  { "type" : "git"
-  , "url" : "https://github.com/Wizcorp/avltree-js.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wizcorp/avltree-js.git"
   },
   "author": "John Ferreira",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "git-message": "^2.0.2",
+    "mocha": "^4.0.1"
+  }
 }

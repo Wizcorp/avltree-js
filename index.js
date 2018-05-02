@@ -194,18 +194,26 @@ AvlTree.prototype._deleteMax = function (node, parent) {
 	return max;
 };
 
-AvlTree.prototype.getMin = function (node) {
+AvlTree.prototype.getMin = function () {
+	return this._getMin(this._root);
+}
+
+AvlTree.prototype._getMin = function (node) {
 	if (node.left === null) {
 		return node;
 	}
-	return this.getMin(node.left);
+	return this._getMin(node.left);
 };
 
-AvlTree.prototype.getMax = function (node) {
+AvlTree.prototype.getMax = function () {
+	return this._getMax(this._root);
+}
+
+AvlTree.prototype._getMax = function (node) {
 	if (node.right === null) {
 		return node;
 	}
-	return this.getMax(node.right);
+	return this._getMax(node.right);
 };
 
 AvlTree.prototype._balance = function (node, parent) {

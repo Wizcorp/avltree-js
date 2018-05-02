@@ -196,7 +196,7 @@ AvlTree.prototype._deleteMax = function (node, parent) {
 
 AvlTree.prototype.getMin = function () {
 	return this._getMin(this._root);
-}
+};
 
 AvlTree.prototype._getMin = function (node) {
 	if (node.left === null) {
@@ -207,7 +207,7 @@ AvlTree.prototype._getMin = function (node) {
 
 AvlTree.prototype.getMax = function () {
 	return this._getMax(this._root);
-}
+};
 
 AvlTree.prototype._getMax = function (node) {
 	if (node.right === null) {

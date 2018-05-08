@@ -200,7 +200,7 @@ AvlTree.prototype.getMin = function () {
 
 AvlTree.prototype._getMin = function (node) {
 	if (node.left === null) {
-		return node;
+		return node.element;
 	}
 	return this._getMin(node.left);
 };
@@ -211,7 +211,7 @@ AvlTree.prototype.getMax = function () {
 
 AvlTree.prototype._getMax = function (node) {
 	if (node.right === null) {
-		return node;
+		return node.element;
 	}
 	return this._getMax(node.right);
 };

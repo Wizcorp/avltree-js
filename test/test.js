@@ -122,14 +122,14 @@ describe('avltree-js tests', function () {
 			tree.insert(1);
 			tree.insert(3);
 			var node = tree.getMin();
-			assert.strictEqual(node.element, 1);
+			assert.strictEqual(node, 1);
 		});
 		it('should return the node with the maximum value', function () {
 			tree.insert(1);
 			tree.insert(3);
 			tree.insert(2);
 			var node = tree.getMax();
-			assert.strictEqual(node.element, 3);
+			assert.strictEqual(node, 3);
 		});
 	});
 	describe('delete', function () {
